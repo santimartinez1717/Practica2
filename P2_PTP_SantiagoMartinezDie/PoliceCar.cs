@@ -6,14 +6,14 @@ namespace P2_PTP_SantiagoMartinezDie
         //constant string as TypeOfVehicle wont change allong PoliceCar instances
         private const string typeOfVehicle = "Police Car";
         private bool isPatrolling;
-        private SpeedRadar speedRadar;
+        private SpeedRadar? speedRadar;
         private bool isChasing;
         private PoliceStation policeStation;
 
-        public PoliceCar(string plate, PoliceStation station) : base(typeOfVehicle, plate)
+        public PoliceCar(string plate, PoliceStation station, SpeedRadar? radar = null) : base(typeOfVehicle, plate)
         {
             isPatrolling = false;
-            speedRadar = new SpeedRadar();
+            speedRadar =  radar;
             isChasing = false;
             policeStation = station;
         }
