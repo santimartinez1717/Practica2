@@ -1,7 +1,7 @@
 ﻿using System;
 namespace P2_PTP_SantiagoMartinezDie
 {
-    class PoliceStation
+    class PoliceStation : IMessageWritter
     {
         public string name;
         public List<PoliceCar> PoliceCars { get; private set; }
@@ -15,15 +15,25 @@ namespace P2_PTP_SantiagoMartinezDie
 
 
         }
+        public string GetName()
+        {
+            return this.name;
+        }
 
+        public override string ToString()
+        {
+            return $"Police station  {GetName()}";
+        }
 
         public void RegisterPoliceCar(PoliceCar car)
         {
             PoliceCars.Add(car);
+            Console.WriteLine(WriteMessage($"police car with plate {car.GetPlate()} registered in this "));
         }
 
         public void ActivateAlert(Taxi infractor)
         {
+            Console.WriteLine(WriteMessage($"Alert: vehicle with plate {infractor.GetPlate()} caught above legal speed."));
             foreach (var car in PoliceCars)
             {
                 if (car.IsPatrolling())
@@ -35,6 +45,10 @@ namespace P2_PTP_SantiagoMartinezDie
             city.WithdrawLicense(infractor);
         }
 
-
+        public string WriteMessage(string message)
+        {
+            return $"{this}: {message}";
+        }
     }
 }
+

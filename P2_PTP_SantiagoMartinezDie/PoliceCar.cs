@@ -22,17 +22,26 @@ namespace P2_PTP_SantiagoMartinezDie
         {
             if (isPatrolling)
             {
-                speedRadar.TriggerRadar(vehicle);
-                string meassurement = speedRadar.GetLastReading();
-                Console.WriteLine(WriteMessage($"Triggered radar. Result: {meassurement}"));
-
-                if (speedRadar.IsOverSpeedLimit())
+                if (speedRadar == null)
                 {
-                    this.ChaseCar(vehicle);
-                    isChasing = true;
-                    policeStation.ActivateAlert(vehicle);
-
+                    Console.WriteLine(WriteMessage("No radar available."));
                 }
+                else
+                {
+                    speedRadar.TriggerRadar(vehicle);
+                    string meassurement = speedRadar.GetLastReading();
+                    Console.WriteLine(WriteMessage($"Triggered radar. Result: {meassurement}"));
+
+                    if (speedRadar.IsOverSpeedLimit())
+                    {
+                        this.ChaseCar(vehicle);
+                        isChasing = true;
+                        policeStation.ActivateAlert(vehicle);
+
+                    }
+                }
+
+
             }
             else
             {
@@ -70,7 +79,7 @@ namespace P2_PTP_SantiagoMartinezDie
                 Console.WriteLine(WriteMessage("was not patrolling."));
             }
         }
-        public void ChaseCar(Vehicle vehicle)
+        public void ChaseCar(RegisteredVehicle vehicle)
         {
             if (!isChasing)
                 Console.WriteLine(WriteMessage($"chasing vehicle with plate {vehicle.GetPlate()}."));
@@ -79,10 +88,17 @@ namespace P2_PTP_SantiagoMartinezDie
 
         public void PrintRadarHistory()
         {
-            Console.WriteLine(WriteMessage("Report radar speed history:"));
-            foreach (float speed in speedRadar.SpeedHistory)
+            if (speedRadar != null)
             {
-                Console.WriteLine(speed);
+                Console.WriteLine(WriteMessage("Radar speed history report:"));
+                foreach (float speed in speedRadar.SpeedHistory)
+                {
+                    Console.WriteLine(speed);
+                }
+            }
+            else
+            {
+                Console.WriteLine(WriteMessage("No radar history available."));
             }
         }
     }
