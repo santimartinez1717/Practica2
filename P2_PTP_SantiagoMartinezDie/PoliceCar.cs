@@ -1,7 +1,7 @@
 ﻿using System;
 namespace P2_PTP_SantiagoMartinezDie
 {
-    class PoliceCar : Vehicle
+    class PoliceCar : RegisteredVehicle
     {
         //constant string as TypeOfVehicle wont change allong PoliceCar instances
         private const string typeOfVehicle = "Police Car";
